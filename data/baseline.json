@@ -1,0 +1,289 @@
+{
+  "decisions": [
+    {
+      "allowed_actions": [
+        "CREATE",
+        "NO-OP"
+      ],
+      "candidate": "orders.status",
+      "index_name": "ix_orders_status",
+      "laya": {
+        "questions": [
+          {
+            "criteria": {
+              "CREATE": "Create the single-column index on this column.",
+              "NO-OP": "Leave the column un-indexed; do not create the index."
+            },
+            "instructions": "Given the index decision-state, choose the index-lifecycle action that minimizes the declared cost objective (read runtime, write overhead, index storage, and build time).",
+            "type": "choice"
+          }
+        ],
+        "state": "{\"column\": \"status\", \"est_cardinality\": 500003.0, \"est_selectivity\": 0.20000079999520004, \"explain_plan_rows\": 100001.0, \"explain_startup_cost\": 0.02, \"explain_total_cost\": 10546.06, \"index_exists\": false, \"index_scans_observed\": 0, \"index_size_bytes\": 0, \"query_frequency\": 0.22, \"scenario_id\": \"baseline\", \"table\": \"orders\", \"workload_write_rate\": 0.2}"
+      },
+      "tabular": {
+        "column": "status",
+        "est_cardinality": 500003.0,
+        "est_selectivity": 0.20000079999520004,
+        "explain_plan_rows": 100001.0,
+        "explain_startup_cost": 0.02,
+        "explain_total_cost": 10546.06,
+        "index_exists": false,
+        "index_scans_observed": 0,
+        "index_size_bytes": 0,
+        "query_frequency": 0.22,
+        "scenario_id": "baseline",
+        "table": "orders",
+        "workload_write_rate": 0.2
+      }
+    },
+    {
+      "allowed_actions": [
+        "CREATE",
+        "NO-OP"
+      ],
+      "candidate": "orders.created_at",
+      "index_name": "ix_orders_created_at",
+      "laya": {
+        "questions": [
+          {
+            "criteria": {
+              "CREATE": "Create the single-column index on this column.",
+              "NO-OP": "Leave the column un-indexed; do not create the index."
+            },
+            "instructions": "Given the index decision-state, choose the index-lifecycle action that minimizes the declared cost objective (read runtime, write overhead, index storage, and build time).",
+            "type": "choice"
+          }
+        ],
+        "state": "{\"column\": \"created_at\", \"est_cardinality\": 500003.0, \"est_selectivity\": 1.9999880000719995e-06, \"explain_plan_rows\": 1.0, \"explain_startup_cost\": 1000.02, \"explain_total_cost\": 7900.3, \"index_exists\": false, \"index_scans_observed\": 0, \"index_size_bytes\": 0, \"query_frequency\": 0.13, \"scenario_id\": \"baseline\", \"table\": \"orders\", \"workload_write_rate\": 0.2}"
+      },
+      "tabular": {
+        "column": "created_at",
+        "est_cardinality": 500003.0,
+        "est_selectivity": 1.9999880000719995e-06,
+        "explain_plan_rows": 1.0,
+        "explain_startup_cost": 1000.02,
+        "explain_total_cost": 7900.3,
+        "index_exists": false,
+        "index_scans_observed": 0,
+        "index_size_bytes": 0,
+        "query_frequency": 0.13,
+        "scenario_id": "baseline",
+        "table": "orders",
+        "workload_write_rate": 0.2
+      }
+    },
+    {
+      "allowed_actions": [
+        "CREATE",
+        "NO-OP"
+      ],
+      "candidate": "orders.customer_id",
+      "index_name": "ix_orders_customer_id",
+      "laya": {
+        "questions": [
+          {
+            "criteria": {
+              "CREATE": "Create the single-column index on this column.",
+              "NO-OP": "Leave the column un-indexed; do not create the index."
+            },
+            "instructions": "Given the index decision-state, choose the index-lifecycle action that minimizes the declared cost objective (read runtime, write overhead, index storage, and build time).",
+            "type": "choice"
+          }
+        ],
+        "state": "{\"column\": \"customer_id\", \"est_cardinality\": 500003.0, \"est_selectivity\": 2.1999868000791994e-05, \"explain_plan_rows\": 11.0, \"explain_startup_cost\": 1000.02, \"explain_total_cost\": 7901.3, \"index_exists\": false, \"index_scans_observed\": 0, \"index_size_bytes\": 0, \"query_frequency\": 0.23, \"scenario_id\": \"baseline\", \"table\": \"orders\", \"workload_write_rate\": 0.2}"
+      },
+      "tabular": {
+        "column": "customer_id",
+        "est_cardinality": 500003.0,
+        "est_selectivity": 2.1999868000791994e-05,
+        "explain_plan_rows": 11.0,
+        "explain_startup_cost": 1000.02,
+        "explain_total_cost": 7901.3,
+        "index_exists": false,
+        "index_scans_observed": 0,
+        "index_size_bytes": 0,
+        "query_frequency": 0.23,
+        "scenario_id": "baseline",
+        "table": "orders",
+        "workload_write_rate": 0.2
+      }
+    },
+    {
+      "allowed_actions": [
+        "CREATE",
+        "NO-OP"
+      ],
+      "candidate": "customers.country",
+      "index_name": "ix_customers_country",
+      "laya": {
+        "questions": [
+          {
+            "criteria": {
+              "CREATE": "Create the single-column index on this column.",
+              "NO-OP": "Leave the column un-indexed; do not create the index."
+            },
+            "instructions": "Given the index decision-state, choose the index-lifecycle action that minimizes the declared cost objective (read runtime, write overhead, index storage, and build time).",
+            "type": "choice"
+          }
+        ],
+        "state": "{\"column\": \"country\", \"est_cardinality\": 50000.0, \"est_selectivity\": 0.1, \"explain_plan_rows\": 5000.0, \"explain_startup_cost\": 0.02, \"explain_total_cost\": 1141.02, \"index_exists\": false, \"index_scans_observed\": 0, \"index_size_bytes\": 0, \"query_frequency\": 0.07, \"scenario_id\": \"baseline\", \"table\": \"customers\", \"workload_write_rate\": 0.2}"
+      },
+      "tabular": {
+        "column": "country",
+        "est_cardinality": 50000.0,
+        "est_selectivity": 0.1,
+        "explain_plan_rows": 5000.0,
+        "explain_startup_cost": 0.02,
+        "explain_total_cost": 1141.02,
+        "index_exists": false,
+        "index_scans_observed": 0,
+        "index_size_bytes": 0,
+        "query_frequency": 0.07,
+        "scenario_id": "baseline",
+        "table": "customers",
+        "workload_write_rate": 0.2
+      }
+    },
+    {
+      "allowed_actions": [
+        "CREATE",
+        "NO-OP"
+      ],
+      "candidate": "order_items.order_id",
+      "index_name": "ix_order_items_order_id",
+      "laya": {
+        "questions": [
+          {
+            "criteria": {
+              "CREATE": "Create the single-column index on this column.",
+              "NO-OP": "Leave the column un-indexed; do not create the index."
+            },
+            "instructions": "Given the index decision-state, choose the index-lifecycle action that minimizes the declared cost objective (read runtime, write overhead, index storage, and build time).",
+            "type": "choice"
+          }
+        ],
+        "state": "{\"column\": \"order_id\", \"est_cardinality\": 2000002.0, \"est_selectivity\": 2.4999975000025e-06, \"explain_plan_rows\": 5.0, \"explain_startup_cost\": 1000.02, \"explain_total_cost\": 28129.2, \"index_exists\": false, \"index_scans_observed\": 0, \"index_size_bytes\": 0, \"query_frequency\": 0.07, \"scenario_id\": \"baseline\", \"table\": \"order_items\", \"workload_write_rate\": 0.2}"
+      },
+      "tabular": {
+        "column": "order_id",
+        "est_cardinality": 2000002.0,
+        "est_selectivity": 2.4999975000025e-06,
+        "explain_plan_rows": 5.0,
+        "explain_startup_cost": 1000.02,
+        "explain_total_cost": 28129.2,
+        "index_exists": false,
+        "index_scans_observed": 0,
+        "index_size_bytes": 0,
+        "query_frequency": 0.07,
+        "scenario_id": "baseline",
+        "table": "order_items",
+        "workload_write_rate": 0.2
+      }
+    },
+    {
+      "allowed_actions": [
+        "CREATE",
+        "NO-OP"
+      ],
+      "candidate": "order_items.unit_price",
+      "index_name": "ix_order_items_unit_price",
+      "laya": {
+        "questions": [
+          {
+            "criteria": {
+              "CREATE": "Create the single-column index on this column.",
+              "NO-OP": "Leave the column un-indexed; do not create the index."
+            },
+            "instructions": "Given the index decision-state, choose the index-lifecycle action that minimizes the declared cost objective (read runtime, write overhead, index storage, and build time).",
+            "type": "choice"
+          }
+        ],
+        "state": "{\"column\": \"unit_price\", \"est_cardinality\": 2000002.0, \"est_selectivity\": 2.04999795000205e-05, \"explain_plan_rows\": 41.0, \"explain_startup_cost\": 1000.02, \"explain_total_cost\": 28132.8, \"index_exists\": false, \"index_scans_observed\": 0, \"index_size_bytes\": 0, \"query_frequency\": 0.08, \"scenario_id\": \"baseline\", \"table\": \"order_items\", \"workload_write_rate\": 0.2}"
+      },
+      "tabular": {
+        "column": "unit_price",
+        "est_cardinality": 2000002.0,
+        "est_selectivity": 2.04999795000205e-05,
+        "explain_plan_rows": 41.0,
+        "explain_startup_cost": 1000.02,
+        "explain_total_cost": 28132.8,
+        "index_exists": false,
+        "index_scans_observed": 0,
+        "index_size_bytes": 0,
+        "query_frequency": 0.08,
+        "scenario_id": "baseline",
+        "table": "order_items",
+        "workload_write_rate": 0.2
+      }
+    }
+  ],
+  "measurement": {
+    "client_wall_median": 6.17614280001726,
+    "measured_passes": 2,
+    "per_template": {
+      "read_customers_by_country": {
+        "kind": "read",
+        "median": 0.029312399999999995,
+        "spread": 0.003952299999999999
+      },
+      "read_group_orders_by_customer": {
+        "kind": "read",
+        "median": 0.4847844,
+        "spread": 0.18030649999999998
+      },
+      "read_join_customers_orders": {
+        "kind": "read",
+        "median": 0.5152902,
+        "spread": 0.21892840000000002
+      },
+      "read_join_orders_items": {
+        "kind": "read",
+        "median": 0.48232870000000005,
+        "spread": 0.12818960000000013
+      },
+      "read_order_items_by_unit_price": {
+        "kind": "read",
+        "median": 2.0663365000000002,
+        "spread": 0.19208290000000083
+      },
+      "read_orders_by_created_range": {
+        "kind": "read",
+        "median": 0.9965299,
+        "spread": 0.2915299
+      },
+      "read_orders_by_status": {
+        "kind": "read",
+        "median": 1.5226783,
+        "spread": 0.026447200000000004
+      },
+      "write_insert_order": {
+        "kind": "write",
+        "median": 0.0009867,
+        "spread": 0.0008259
+      },
+      "write_insert_order_item": {
+        "kind": "write",
+        "median": 0.000888,
+        "spread": 0.0005612
+      },
+      "write_update_order_status": {
+        "kind": "write",
+        "median": 0.0007195999999999999,
+        "spread": 0.0053969000000000005
+      }
+    },
+    "read_runtime": {
+      "median": 6.0765311,
+      "spread": 0.6022392999999981
+    },
+    "repeats": 3,
+    "server_le_client": true,
+    "server_wall_median": 6.083831,
+    "write_overhead": {
+      "median": 0.0035381,
+      "spread": 0.0049536
+    }
+  },
+  "mix": "baseline",
+  "scenario_id": "baseline"
+}

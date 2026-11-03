@@ -360,50 +360,55 @@ def measure(
     with connect(cfg) as conn:
         ensure_pg_stat_statements(conn)
         int_bounds = _referential_int_bounds(conn, workload)
+        _cleanup_writes(conn)
+        try:
+            for repeat in range(repeats):
+                # A fresh RNG per repeat, but derived from the base seed so the whole
+                # measurement is reproducible for a fixed seed.
+                rng = random.Random(seed + repeat)
+                plan = _build_pass_plan(workload, mix, queries_per_pass, rng)
 
-        for repeat in range(repeats):
-            # A fresh RNG per repeat, but derived from the base seed so the whole
-            # measurement is reproducible for a fixed seed.
-            rng = random.Random(seed + repeat)
-            plan = _build_pass_plan(workload, mix, queries_per_pass, rng)
+                # --- warm-up phase (untimed) ---------------------------------- #
+                warm_rng = random.Random(seed * 7 + repeat)
+                for _ in range(warmup_passes):
+                    _execute_pass(conn, workload, plan, warm_rng, int_bounds)
+                conn.commit()
 
-            # --- warm-up phase (untimed) ---------------------------------- #
-            warm_rng = random.Random(seed * 7 + repeat)
-            for _ in range(warmup_passes):
-                _execute_pass(conn, workload, plan, warm_rng, int_bounds)
-            conn.commit()
+                if quiesce:
+                    quiesce_background(conn)
 
-            if quiesce:
-                quiesce_background(conn)
+                # --- measured phase ------------------------------------------- #
+                repeat_read = 0.0
+                repeat_write = 0.0
+                repeat_server = 0.0
+                repeat_client = 0.0
+                repeat_template: dict[str, float] = {}
 
-            # --- measured phase ------------------------------------------- #
-            repeat_read = 0.0
-            repeat_write = 0.0
-            repeat_server = 0.0
-            repeat_client = 0.0
-            repeat_template: dict[str, float] = {}
+                measure_rng = random.Random(seed * 31 + repeat)
+                for _ in range(measured_passes):
+                    per_tmpl_s, server_s, client_s = _measured_pass_server_times(
+                        conn, workload, plan, measure_rng, int_bounds
+                    )
+                    repeat_server += server_s
+                    repeat_client += client_s
+                    for name, secs in per_tmpl_s.items():
+                        repeat_template[name] = repeat_template.get(name, 0.0) + secs
+                        kind = workload.templates[name].kind
+                        if kind == READ:
+                            repeat_read += secs
+                        elif kind == WRITE:
+                            repeat_write += secs
 
-            measure_rng = random.Random(seed * 31 + repeat)
-            for _ in range(measured_passes):
-                per_tmpl_s, server_s, client_s = _measured_pass_server_times(
-                    conn, workload, plan, measure_rng, int_bounds
-                )
-                repeat_server += server_s
-                repeat_client += client_s
-                for name, secs in per_tmpl_s.items():
-                    repeat_template[name] = repeat_template.get(name, 0.0) + secs
-                    kind = workload.templates[name].kind
-                    if kind == READ:
-                        repeat_read += secs
-                    elif kind == WRITE:
-                        repeat_write += secs
-
-            read_samples.append(repeat_read)
-            write_samples.append(repeat_write)
-            server_wall_samples.append(repeat_server)
-            client_wall_samples.append(repeat_client)
-            for name, secs in repeat_template.items():
-                template_samples.setdefault(name, []).append(secs)
+                read_samples.append(repeat_read)
+                write_samples.append(repeat_write)
+                server_wall_samples.append(repeat_server)
+                client_wall_samples.append(repeat_client)
+                for name, secs in repeat_template.items():
+                    template_samples.setdefault(name, []).append(secs)
+                _cleanup_writes(conn)
+        finally:
+            conn.rollback()
+            _cleanup_writes(conn)
 
     per_template = {
         name: TemplateTiming(
@@ -453,3 +458,9 @@ def _component(samples: list[float]) -> ComponentTiming:
         spread=_iqr(samples),
         samples=list(samples),
     )
+
+def _cleanup_writes(conn) -> None:
+    """Remove rows inserted by write templates (IDs above the baseline range)."""
+    conn.execute("DELETE FROM order_items WHERE order_item_id >= 2000001")
+    conn.execute("DELETE FROM orders WHERE order_id >= 500001")
+    conn.commit()
